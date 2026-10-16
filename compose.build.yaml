@@ -19,8 +19,8 @@ services:
       - wled-platformio:/home/node/.platformio
     command:
       - bash
-      - -lc
-      - npm ci && npm run build && pio run -e "$${PIO_ENV}"
+      - -c
+      - npm ci && npm run build && /opt/platformio/bin/pio run -e "$${PIO_ENV}"
 
 volumes:
   wled-node-modules:

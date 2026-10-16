@@ -1,6 +1,6 @@
 # Sendspin Visualizer for WLED on MagWLED-1
 
-Last updated: 2026-10-15
+Last updated: 2026-10-16
 
 ## Objective
 
@@ -19,8 +19,8 @@ The intended user flow is:
 | Phase | Status | Notes |
 | --- | --- | --- |
 | Planning and architecture | Complete | This document records the initial design and checkpoints. |
-| Reproducible build tooling | Implemented, host validation pending | `Dockerfile.build` and `compose.build.yaml` provide isolated Node and PlatformIO tooling. |
-| Stock MagWLED-1 build validation | In progress | Web assets build; firmware compile awaits running Compose from the macOS host. |
+| Reproducible build tooling | Validated | `Dockerfile.build` and `compose.build.yaml` built stock `esp32c3dev` successfully on the macOS Docker host. |
+| Stock MagWLED-1 build validation | Build complete; hardware validation pending | Firmware artifacts and initial flash/static-RAM measurements are available; GPIO behavior still requires the physical board. |
 | Visualizer-only Sendspin build spike | Not started | Primary feasibility gate. |
 | Standalone Sendspin telemetry | Not started | Log synchronized visualizer frames before integrating effects. |
 | WLED audio-data integration | Not started | Must not require changes to individual effects. |
@@ -375,7 +375,10 @@ Record actual values here during implementation.
 
 | Measurement | Stock WLED | Sendspin started | Connected idle | Streaming | Minimum observed |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Firmware size | TBD | TBD | N/A | N/A | N/A |
+| Firmware size | 1,313,280 bytes | TBD | N/A | N/A | N/A |
+| OTA application slot usage | 83.5% of 1,572,864 bytes | TBD | N/A | N/A | N/A |
+| Linked `.data` + `.bss` | 74,080 bytes | TBD | N/A | N/A | N/A |
+| Link-time primary DRAM after heap start | 202,656 bytes | TBD | N/A | N/A | N/A |
 | Free heap | TBD | TBD | TBD | TBD | TBD |
 | Largest free block | TBD | TBD | TBD | TBD | TBD |
 | Internal RAM used by tasks/buffers | TBD | TBD | TBD | TBD | N/A |
@@ -463,6 +466,7 @@ Do not include the development submodule in a WLED PR unless maintainers explici
 | 2026-10-15 | Validate Sendspin build and memory before effect integration | Dependency/toolchain and no-PSRAM feasibility are the main risks |
 | 2026-10-15 | Use local board overrides during development | Changes to the main `platformio.ini` require maintainer approval |
 | 2026-10-15 | Use a Docker Compose build environment | The agent container has no Python, PlatformIO, or Docker daemon, and its host-mounted `node_modules` is read-only |
+| 2026-10-16 | Accept the stock `esp32c3dev` Docker build as the compile baseline | The build produced firmware, ELF, linker map, bootloader, and partition artifacts within the standard 4 MB OTA layout |
 
 ## References
 
