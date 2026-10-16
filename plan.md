@@ -19,7 +19,8 @@ The intended user flow is:
 | Phase | Status | Notes |
 | --- | --- | --- |
 | Planning and architecture | Complete | This document records the initial design and checkpoints. |
-| Stock MagWLED-1 build validation | Not started | Must precede Sendspin integration. |
+| Reproducible build tooling | Implemented, host validation pending | `Dockerfile.build` and `compose.build.yaml` provide isolated Node and PlatformIO tooling. |
+| Stock MagWLED-1 build validation | In progress | Web assets build; firmware compile awaits running Compose from the macOS host. |
 | Visualizer-only Sendspin build spike | Not started | Primary feasibility gate. |
 | Standalone Sendspin telemetry | Not started | Log synchronized visualizer frames before integrating effects. |
 | WLED audio-data integration | Not started | Must not require changes to individual effects. |
@@ -461,6 +462,7 @@ Do not include the development submodule in a WLED PR unless maintainers explici
 | 2026-10-15 | Keep AudioReactive and Sendspin providers mutually exclusive | Both would otherwise compete for the same effect-facing data identity |
 | 2026-10-15 | Validate Sendspin build and memory before effect integration | Dependency/toolchain and no-PSRAM feasibility are the main risks |
 | 2026-10-15 | Use local board overrides during development | Changes to the main `platformio.ini` require maintainer approval |
+| 2026-10-15 | Use a Docker Compose build environment | The agent container has no Python, PlatformIO, or Docker daemon, and its host-mounted `node_modules` is read-only |
 
 ## References
 
